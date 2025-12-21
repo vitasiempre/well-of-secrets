@@ -1,0 +1,62 @@
+<!DOCTYPE html> 
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+  </head>
+  <body>
+    <h1 id="">Welcome to the Home Page</h1>
+    <form action="/submit" method="post">
+      <label for="secretListener">tell me a secret:</label>
+      <textarea type="text" id="secretListener" name="text" required></textarea>   
+      <button type="submit" id="submitButton">Submit</button>
+    </form>
+
+    <script>
+        const form = document.querySelector('form');
+        const textarea = document.querySelector('textarea');
+        const button = document.querySelector('#submitButton');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://localhost:3000/load')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = secretListener.value;
+            const jsonSecret = JSON.stringify({text});
+            console.log("listener", secretListener, ", value", secretListener.value, jsonSecret);
+            const res = await fetch('http://localhost:3000/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonSecret,
+            })
+            // .then(response => response.json())
+            // .then(data => {
+            //     console.log(data)
+            // })
+
+            if (!res.ok) {
+                const raw = await res.text();
+                console.log("Server error:", res.status, raw);
+                return;
+            }
+
+            const data = await res.json();
+            console.log(data);
+        });
+    </script>
+  </body>
+</html>
