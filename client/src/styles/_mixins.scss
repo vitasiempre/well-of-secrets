@@ -1,0 +1,11 @@
+@mixin default-text {
+  font-family: Arial, sans-serif;
+  font-size: 1.25vw;
+  line-height: 1;
+  text-align: justify;
+  color: hsl(0, 0%, 30%);
+
+  &::first-letter {
+    // color: white;
+  }
+}

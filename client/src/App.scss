@@ -1,0 +1,46 @@
+#root {
+  margin: 0 auto;
+}
+
+.Well {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 30px;
+  align-items: stretch;
+  width: 25vw;
+  margin: calc(50vh - 30px) 0 calc(50vh - 1.25vw + 30px) 50%;
+}
+
+#title, #info {
+  position: fixed;
+  top: calc(50vh - 30px);
+  color: hsl(0, 0%, 65%);
+  @include default-text;
+}
+
+#title {
+  left: 30px;
+}
+
+#info {
+  right: 30px;
+  cursor: pointer;
+}
+
+#projectDescription {
+  @include default-text;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 400;
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 30px;
+  width: calc(100vw - 60px);
+  font-size: 3vw;
+  mix-blend-mode: difference;
+  pointer-events: none;
+
+  p+p {
+    margin-top: 30px;
+  }
+}

@@ -8,5 +8,12 @@ export default defineConfig({
     proxy: {
       "/api": "http://localhost:3000"
     }
-  }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "/src/styles/_index.scss" as *;`,
+      },
+    },
+  },
 })

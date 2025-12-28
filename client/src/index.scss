@@ -1,0 +1,29 @@
+@use "./styles/_index.scss" as *;
+@use "./reset.scss";
+
+:root {
+  font-family: Arial, sans-serif;
+  line-height: 1;
+  font-weight: 600;
+
+  color: #E6E6E6;
+  background-color: #0D0D0D;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 30px;
+}
+
+* {
+  overscroll-behavior: none;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::selection {
+    background: none;
+  }
+}
