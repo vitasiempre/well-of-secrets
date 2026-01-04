@@ -1,11 +1,26 @@
-@mixin default-text {
+$font-sizes: (
+  desktop: (s: 0.8vw,  m: 1.09vw, l: 1.25vw, xl: 2.5vw),
+  mobile:  (s: 2.8vw,   m: 3.6vw,   l: 4.8vw,   xl: 5.6vw)
+);
+
+@mixin default-text($variant: m) {
+  @if $variant == s {
+    letter-spacing: .03vw;
+  }
+  font-size: map-get(map-get($font-sizes, desktop), $variant);
   font-family: Arial, sans-serif;
-  font-size: 1.25vw;
   line-height: 1;
   text-align: justify;
-  color: hsl(0, 0%, 30%);
+  font-weight: 600;
+  color: hsl(0, 0%, 50%);
 
   &::first-letter {
     // color: white;
   }
+
+  @media screen and (max-width: 800px) {
+    font-size: map-get(map-get($font-sizes, mobile), $variant);
 }
+  
+}
+

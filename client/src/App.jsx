@@ -17,7 +17,7 @@ function App() {
 
     if (!infoVisibility && projectDescription && projectDescription != null && projectDescription != undefined) {
       projectDescription.style.display = 'inline';
-      well.style.opacity = .1;
+      well.style.opacity = .15;
       infoVisibility = true;
     } else {
       projectDescription.style.display = 'none';
@@ -29,14 +29,17 @@ function App() {
   return (
     <>
       <p id="title">Well of Secrets</p>
+      
+      <p id="info" onClick={toggleInfoVisibility}>Info</p>
+      <div id="projectDescription">
+        <div id="overlay" onClick={toggleInfoVisibility}></div>
+        <p>i carry a lot of shame in myself. some of it is based on me being born a queer person in a xenophobic world, some i learnt from people around me, and other is caused by the actions i regret. one day i thought that maybe the only way to get free from it is to say out loud the things i'm most afraid of admitting. maybe that's why various religions have rites of confession — in order to feel lighter, you must put down all that weight you carry</p>
+        <p>this is a collective art project initiated by me and enriched by any interested anonymous person. it's a place where anyone can put down their heaviest secrets without being judged — </p>
+        
+      </div>
       <div className='Well'>
         <SecretListener />
         <ListSecrets />
-      </div>
-      <p id="info" onClick={toggleInfoVisibility}>Info</p>
-      <div id="projectDescription">
-        <p>i carry a lot of shame in myself. some of it is based on me being born a queer person in a xenophobic world, some i learnt from people around me, and other is caused by the actions i regret. one day i thought that maybe the only way to get free from it is to say out loud the things i'm most afraid of admitting. maybe that's why various religions have rites of confession — in order to feel lighter, you must put down all that weight you carry</p>
-        <p>this is a collective art project initiated by me and enriched by any interested anonymous person. it's a place where anyone can put down their heaviest secrets</p>
       </div>
     </>
   )

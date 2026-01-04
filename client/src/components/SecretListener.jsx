@@ -59,7 +59,7 @@ const SecretListener = () => {
     return <>
     <form action="/submit" method="post" onSubmit={onSubmitForm}>
       <textarea type="text" id="secretListener" rows="1" onKeyDown={handleKeyDown} placeholder="Share your secret..." name="text" value={text} onChange={e => onInput(e)} required></textarea>   
-      {/* <button type="submit" id="submitButton"> </button> */}
+      <button type="submit" id="submitButton"> Send</button>
     </form>
     </>
 }
