@@ -1,6 +1,8 @@
+@use "./variables" as *;
+
 $font-sizes: (
-  desktop: (s: 0.8vw,  m: 1.09vw, l: 1.25vw, xl: 2.5vw),
-  mobile:  (s: 2.8vw,   m: 3.6vw,   l: 4.8vw,   xl: 5.6vw)
+  desktop: (s: 0.9vw,  m: 1.2vw, l: 1.75vw, xl: 2.5vw),
+  mobile:  (s: 2.7vw,   m: 3.6vw,   l: 4.5vw,   xl: 4.5vw)
 );
 
 @mixin default-text($variant: m) {
@@ -9,17 +11,18 @@ $font-sizes: (
   }
   font-size: map-get(map-get($font-sizes, desktop), $variant);
   font-family: Arial, sans-serif;
-  line-height: 1;
+  line-height: 1.05;
   text-align: justify;
   font-weight: 600;
-  color: hsl(0, 0%, 50%);
+  color: $color;
 
   &::first-letter {
     // color: white;
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: $breakpoint) {
     font-size: map-get(map-get($font-sizes, mobile), $variant);
+    line-height: 1.1;
 }
   
 }
