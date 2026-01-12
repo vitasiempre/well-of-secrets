@@ -17,12 +17,20 @@ function App() {
 
     if (!infoVisibility && projectDescription && projectDescription != null && projectDescription != undefined) {
       projectDescription.style.display = 'flex';
+      setTimeout(() => {
+        projectDescription.style.opacity = '1';
+      projectDescription.style.filter = 'blur(0px)';
       well.style.opacity = .1;
       infoVisibility = true;
+      }, 10)
     } else {
-      projectDescription.style.display = 'none';
+      projectDescription.style.filter = 'blur(8px)';
+      projectDescription.style.opacity = '0';
       well.style.opacity = 1;
-      infoVisibility = false;
+      setTimeout(() => {
+        projectDescription.style.display = 'none';
+        infoVisibility = false;
+      }, 400)
     }
   }
 
