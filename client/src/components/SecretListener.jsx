@@ -1,31 +1,51 @@
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import "./SecretListener.scss";
 
 const SecretListener = () => {
   const [text, setText] = useState("");
   const [message, setMessage] = useState("");
+  const [touched, setTouched] = useState(false);
+  const [error, setError] = useState("");
+  const prevTextRef = useRef("");
+  const INVISIBLE_CHARS = /[\u0000-\u001F\u007F\u200B\u200C\u200D\uFEFF\u2060]/;
 
-  // Show message once after redirect, then clear
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (!params.get("submitted")) return;
-
     setMessage("thank you for your secret");
+    window.history.replaceState({}, "", window.location.pathname);
+  }, []);
 
-    // optional: clean the URL so refreshing doesn't show it again
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.get("submitted")) return;
+    setMessage("thank you for your secret");
     window.history.replaceState({}, "", window.location.pathname);
   }, []);
 
   useEffect(() => {
     if (!message) return;
-
     const t = setTimeout(() => setMessage(""), 3000);
     console.log(message, "message");
     return () => clearTimeout(t);
-    
   }, [message]);
 
   const isDisabled = text.trim() === "";
+
+  const validate = (text) => {
+  if (!text) return "Tell me something";
+  const v = text.trim();
+  if (!v) return "Tell me something";
+  if (INVISIBLE_CHARS.test(v))
+    return "This doesn't feel like a secret";
+  if (v.length < 5)
+    return "This doesn't feel like a secret";
+  if (v.length > 1000)
+    return "Your secret should be under 1000 characters";
+  if (!v.includes(" "))
+    return "This doesn't feel like a secret";
+  return "";
+  };
 
   function autoResize(el) {
     el.style.height = "auto";
@@ -34,13 +54,33 @@ const SecretListener = () => {
 
   function onInput(e) {
     const normalized = e.target.value.replace(/\n{2,}/g, "\n");
+    const prev = prevTextRef.current;
+    const isErasing = normalized.length < prev.length;
     setText(normalized);
+    prevTextRef.current = normalized;
     autoResize(e.target);
+    const err = validate(normalized);
+    if (err && touched && !isErasing) { 
+      setError(err);
+    } else {
+      setError(null);
+    }    
+    if (!normalized) setTouched(false);
+    console.log(err);
   }
 
   const submit = async () => {
-    if (!text.trim()) return;
+    const err = validate(text);
+    setTouched(true);
+    console.log(err);
+    
+    if (err) { 
+      setError(err); 
+      console.log(err);
+      return; }
 
+    setError("");
+    
     try {
       await fetch("http://localhost:3000/submit", {
         method: "POST",
@@ -51,7 +91,7 @@ const SecretListener = () => {
       window.location.href = "/?submitted=1";
     } catch (error) {
       console.error(error);
-      setMessage("Something went wrong.");
+      setError(data?.errors?.text?.[0] ?? "something went wrong");
     }
   };
 
@@ -75,9 +115,10 @@ const SecretListener = () => {
 
   return (
     <>
-    <p className={`message ${message ? "is-active" : ""}`}>
-            thank you for your secret
-        </p>
+      <p className={`message ${message ? "is-active" : ""}`}>
+        thank you for your secret
+      </p>
+
 
       <form onSubmit={onSubmitForm}>
         <textarea
@@ -90,6 +131,7 @@ const SecretListener = () => {
           onChange={onInput}
           required
         />
+        <p className={`error ${error ? "is-active" : ""}`}>{error ? error : ""}</p>
         <button type="submit" id="submitButton" disabled={isDisabled}>
           ( Send )
         </button>
