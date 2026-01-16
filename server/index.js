@@ -1,26 +1,39 @@
+import "dotenv/config";
 import { z } from "zod";
+import express from "express";
+import cors from "cors";
 const INVISIBLE_CHARS = /[\u0000-\u001F\u007F\u200B\u200C\u200D\uFEFF\u2060]/g;
+const ALLOWED_ORIGINS = [
+  "http://localhost:5173",
+  "https://by.vitasiempre.com",
+  "https://well-of-secrets.by.vitasiempre.com",
+];
 
 const SecretSchema = z.object({
   text: z
     .string()
     .transform((s) => s.replace(INVISIBLE_CHARS, "").trim())
-    .refine((s) => s.length > 0, { message: "Text is required." })
-    .refine((s) => s.length <= 280, { message: "Text is too long (max 280)." }),
+    .refine((s) => s.length > 5, { message: "This doesn't feel like a secret" })
+    .refine((s) => s.length <= 1000, { message: "Your secret should be under 1000 characters" })
+    .refine((s) => s.split(/\s+/).length >= 2, {
+    message: "This doesn't feel like a secret" }),
 });
 
-const express = require('express');
-const cors = require('cors');
-const { readFile } = require('node:fs/promises');
+import { readFile } from 'node:fs/promises';
 const app = express(); 
-const pool = require("./db");
+import pool from "./db.js";
 
 app.use(cors({
-    origin: '*',
+    origin: (origin, cb) => {
+    if (!origin) return cb(null, true);
+    return ALLOWED_ORIGINS.includes(origin)
+      ? cb(null, true)
+      : cb(new Error("Not allowed by CORS"));
+    },
 }));
 app.use(express.json());
 
-app.get('/', async (req, res) => {
+app.get('/api/', async (req, res) => {
     const html = await readFile("home.html", "utf8");
     res.type('text/html').send(html);
     
@@ -30,7 +43,7 @@ app.get('/', async (req, res) => {
 // ROUTES
 
 // Create secret
-app.post("/submit", async (req, res) => {
+app.post("/api/submit", async (req, res) => {
   try {
     const parsed = SecretSchema.safeParse(req.body);
 
@@ -57,10 +70,11 @@ app.post("/submit", async (req, res) => {
 
 // Get all secrets
 
-app.get('/load', async (req, res) => {
+app.get('/api/load', async (req, res) => {
     try {
-        const allSecrets = await pool.query("SELECT * FROM secrets");
+        const allSecrets = await pool.query("SELECT * FROM secrets ORDER BY created_at DESC");
         res.json(allSecrets.rows);
+        
     } catch (error) {
         console.error(error.message);
     }

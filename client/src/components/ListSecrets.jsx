@@ -7,7 +7,7 @@ const ListSecrets = () => {
 
     const getSecrets = async () => {
         try {
-            const res = await fetch('http://localhost:3000/load')
+            const res = await fetch("/api/load")
             const jsonData = await res.json()
 
             setSecrets(jsonData)

@@ -82,7 +82,7 @@ const SecretListener = () => {
     setError("");
     
     try {
-      await fetch("http://localhost:3000/submit", {
+      await fetch("/api/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
