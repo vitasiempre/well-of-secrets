@@ -23,6 +23,11 @@ import { readFile } from 'node:fs/promises';
 const app = express(); 
 import pool from "./db.js";
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 app.use(cors({
     origin: (origin, cb) => {
     if (!origin) return cb(null, true);
@@ -39,6 +44,10 @@ app.get('/api/', async (req, res) => {
     
 }
 );
+
+app.get("/", (req, res) => {
+  res.send("ok");
+});
 
 // ROUTES
 
@@ -76,10 +85,7 @@ app.get('/api/load', async (req, res) => {
         res.json(allSecrets.rows);
         
     } catch (error) {
-        console.error(error.message);
-    }
-});
-
-app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+    console.error(error);
+    res.status(500).json({ ok: false, error: error.message });
+  }
 });

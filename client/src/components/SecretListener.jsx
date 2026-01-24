@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import "./SecretListener.scss";
+const API = import.meta.env.VITE_API_URL;
 
 const SecretListener = () => {
   const [text, setText] = useState("");
@@ -82,7 +83,7 @@ const SecretListener = () => {
     setError("");
     
     try {
-      await fetch("/api/submit", {
+      await fetch(`${API}/submit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),

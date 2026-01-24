@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import "./ListSecrets.scss"
+const API = import.meta.env.VITE_API_URL;
 
 const ListSecrets = () => {
 
@@ -7,7 +8,7 @@ const ListSecrets = () => {
 
     const getSecrets = async () => {
         try {
-            const res = await fetch("/api/load")
+            const res = await fetch(`${API}/load`)
             const jsonData = await res.json()
 
             setSecrets(jsonData)

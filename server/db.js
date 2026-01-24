@@ -1,6 +1,23 @@
-const Pool = require("pg").Pool;
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-})
+import pkg from "pg";
+const { Pool } = pkg;
 
-module.exports = pool;
+const isCloud = !!process.env.CLOUD_SQL_CONNECTION_NAME;
+
+const pool = new Pool(
+  isCloud
+    ? {
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
+        host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
+      }
+    : {
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
+        host: process.env.DB_HOST,
+        port: Number(process.env.DB_PORT),
+      }
+);
+
+export default pool;
