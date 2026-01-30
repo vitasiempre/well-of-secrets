@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "well-of-secrets",
   "version": "1.0.0",
   "description": "",

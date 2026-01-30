@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import "./SecretListener.scss";
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "/api";
+console.log("API", `${API}/submit`);
+
 
 const SecretListener = () => {
   const [text, setText] = useState("");
