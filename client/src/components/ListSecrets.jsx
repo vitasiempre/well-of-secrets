@@ -26,7 +26,6 @@ const ListSecrets = () => {
             {secrets.map(secret => {
         let className = '';
         const timestamp = secret.created_at.slice(-7, -5);
-        console.log(timestamp);
 
         if (timestamp % 5 === 0) {
             className = 'xl';
