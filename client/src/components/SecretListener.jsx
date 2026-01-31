@@ -132,10 +132,13 @@ const SecretListener = () => {
           onChange={onInput}
           required
         />
-        <p className={`error ${error ? "is-active" : ""}`}>{error ? error : ""}</p>
-        <button type="submit" id="submitButton" disabled={isDisabled}>
-          ( Send )
-        </button>
+        <div className="buttonWrapper">
+          <button type="submit" id="submitButton" disabled={isDisabled}>
+            ( Send )
+          </button>
+          <p className={`error ${error ? "is-active" : ""}`}>{error ? error : ""}</p>
+        </div>
+        
       </form>
 
       
