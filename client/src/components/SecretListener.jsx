@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import "./SecretListener.scss";
 const API = import.meta.env.VITE_API_URL || "/api";
-console.log("API", `${API}/submit`);
 
 
 const SecretListener = () => {
@@ -29,7 +28,6 @@ const SecretListener = () => {
   useEffect(() => {
     if (!message) return;
     const t = setTimeout(() => setMessage(""), 3000);
-    console.log(message, "message");
     return () => clearTimeout(t);
   }, [message]);
 
@@ -43,8 +41,8 @@ const SecretListener = () => {
     return "This doesn't feel like a secret";
   if (v.length < 5)
     return "This doesn't feel like a secret";
-  if (v.length > 1000)
-    return "Your secret should be under 1000 characters";
+  if (v.length > 2000)
+    return "Your secret should be under 2000 characters";
   if (!v.includes(" "))
     return "This doesn't feel like a secret";
   return "";

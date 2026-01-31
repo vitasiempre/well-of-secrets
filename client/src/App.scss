@@ -2,6 +2,7 @@
 
 #root {
   margin: 0 auto;
+  hyphens: auto
 }
 
 .Well {
@@ -79,7 +80,7 @@
 
 @media screen and (max-width: $breakpoint) {
   .Well {
-    width: 50vw;
+    width: calc(100vw - map.get($side-margin, mobile) * 2);
     box-sizing: border-box;
     margin: calc(50vh - map.get($grid-margin, mobile)) auto 50vh auto;
     padding: 0;
@@ -93,11 +94,11 @@
   }
 
   #title {
-    left: calc(25vw);
+    left: map.get($side-margin, mobile);
   }
 
   #info {
-    right: calc(25vw);
+    right: map.get($side-margin, mobile);
   }
 
   // #title {
@@ -134,12 +135,13 @@
   #projectDescription {
     position: absolute;
     top: calc(map.get($grid-margin, mobile) * 2 + 3vw);
-    @include default-text(m);
+    @include default-text(l);
     font-family: 'Times New Roman', Times, serif;
     font-weight: 400;
     height: 100%;
     flex-direction: column;
     justify-content: start;
+    padding: 0 map.get($side-margin, mobile);
   }
 
   #overlay {

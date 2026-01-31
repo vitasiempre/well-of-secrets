@@ -9,12 +9,14 @@ const ALLOWED_ORIGINS = [
   "https://well-of-secrets.by.vitasiempre.com",
 ];
 
+const isVercel = (origin) => /^https:\/\/.*\.vercel\.app$/.test(origin);
+
 const SecretSchema = z.object({
   text: z
     .string()
     .transform((s) => s.replace(INVISIBLE_CHARS, "").trim())
     .refine((s) => s.length > 5, { message: "This doesn't feel like a secret" })
-    .refine((s) => s.length <= 1000, { message: "Your secret should be under 1000 characters" })
+    .refine((s) => s.length <= 2000, { message: "Your secret should be under 2000 characters" })
     .refine((s) => s.split(/\s+/).length >= 2, {
     message: "This doesn't feel like a secret" }),
 });
@@ -30,11 +32,11 @@ app.listen(PORT, () => {
 
 app.use(cors({
     origin: (origin, cb) => {
-    if (!origin) return cb(null, true);
-    return ALLOWED_ORIGINS.includes(origin)
-      ? cb(null, true)
-      : cb(new Error("Not allowed by CORS"));
+      if (!origin) return cb(null, true);
+      if (ALLOWED_ORIGINS.includes(origin) || isVercel(origin)) return cb(null, true);
+      return cb(new Error("Not allowed by CORS"));
     },
+    credentials: false,
 }));
 app.use(express.json());
 

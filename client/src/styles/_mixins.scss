@@ -3,7 +3,7 @@
 
 $font-sizes: (
   desktop: (s: 0.9vw,  m: 1.2vw, l: 1.75vw, xl: 2.5vw),
-  mobile:  (s: 2.7vw,   m: 3.6vw,   l: 4.5vw,   xl: 4.5vw)
+  mobile:  (s: 3vw,   m: 4vw,   l: 5vw,   xl: 6vw)
 );
 
 @mixin default-text($variant: m) {
