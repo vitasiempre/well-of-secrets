@@ -42,7 +42,7 @@ function App() {
       <div id="projectDescription">
         <div id="overlay" onClick={toggleInfoVisibility}></div>
         <div>
-          <p>I carry a lot of shame in myself. Some of it is based on me being born a queer person in a xenophobic world, some I learnt from people around me, and other is caused by the actions i regret. </p>
+          <p>I carry a lot of shame in myself. Some of it is based on me being born a queer person in a xenophobic world, some I learnt from people around me, and other is caused by the actions I regret. </p>
           <p>One day I thought that maybe the only way to get free from it is to say out loud the things I'm most afraid of admitting. Maybe that's why various religions have rites of confession — in order to feel lighter, you must put down all that weight you carry.</p>
           <p>Here anyone can put down their heaviest secrets. Some confessions are mine, some are taken from famous people's diaries, and the rest belong to internet anons. Since no one knows which secret belongs to whom, there can be no judgement.</p>
           <p>The final result of this project will be a zine. Please note that if you publish your secret here, it might be featured in the book anonymously.</p>
