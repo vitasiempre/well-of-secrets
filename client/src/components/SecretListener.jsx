@@ -38,13 +38,13 @@ const SecretListener = () => {
   const v = text.trim();
   if (!v) return "Tell me something";
   if (INVISIBLE_CHARS.test(v))
-    return "This doesn't feel like a secret";
+    return "Invisible chars";
   if (v.length < 5)
-    return "This doesn't feel like a secret";
+    return "too short";
   if (v.length > 2000)
     return "Your secret should be under 2000 characters";
   if (!v.includes(" "))
-    return "This doesn't feel like a secret";
+    return "one word";
   return "";
   };
 
