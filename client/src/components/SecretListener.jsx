@@ -9,7 +9,7 @@ const SecretListener = () => {
   const [touched, setTouched] = useState(false);
   const [error, setError] = useState("");
   const prevTextRef = useRef("");
-  const INVISIBLE_CHARS = /[\u0000-\u001F\u007F\u200B\u200C\u200D\uFEFF\u2060]/;
+  const INVISIBLE_CHARS = /[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F\u200B\u200C\u200D\uFEFF\u2060]/g;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -35,16 +35,14 @@ const SecretListener = () => {
 
   const validate = (text) => {
   if (!text) return "Tell me something";
-  const v = text.trim();
+  const v = text.replace(INVISIBLE_CHARS, "").trim();
   if (!v) return "Tell me something";
-  if (INVISIBLE_CHARS.test(v))
-    return "Invisible chars";
   if (v.length < 5)
-    return "too short";
+    return "This doesn't feel like a secret";
   if (v.length > 2000)
     return "Your secret should be under 2000 characters";
-  if (!v.includes(" "))
-    return "one word";
+  if ((!v.includes(" ")) && (!/[\r\n]/.test(v)))
+    return "This doesn't feel like a secret";
   return "";
   };
 

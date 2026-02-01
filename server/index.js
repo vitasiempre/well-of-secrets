@@ -2,7 +2,7 @@ import "dotenv/config";
 import { z } from "zod";
 import express from "express";
 import cors from "cors";
-const INVISIBLE_CHARS = /[\u0000-\u001F\u007F\u200B\u200C\u200D\uFEFF\u2060]/g;
+const INVISIBLE_CHARS = /[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F\u200B\u200C\u200D\uFEFF\u2060]/g;
 const ALLOWED_ORIGINS = [
   "http://localhost:5173",
   "https://by.vitasiempre.com",
