@@ -11,7 +11,7 @@
   gap: map.get($grid-margin, desktop);
   align-items: stretch;
   width: 25vw;
-  margin: calc(50vh) 0 calc(50vh - 1.25vw + 30px) 50%;
+  margin: calc(50vh) 0 calc(50vh - 1.25vw) 50%;
   transition: opacity 0.3s ease-in-out;
   position: relative;
 }
